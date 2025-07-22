@@ -1,0 +1,8 @@
+ketchersvc:
+    image: ptrxyz/chemotion:ketchersvc-2.0.1
+    environment:
+      - CONFIG_KETCHER_URL=http://ketchersidecar
+    network:
+      - ketcher-for-sidecar
+networks:
+  ketcher-for-sidecar:
