@@ -13,3 +13,5 @@ services:
       - spectra-internal
     ports:
       - 4000
+networks:
+  spectra-internal:
