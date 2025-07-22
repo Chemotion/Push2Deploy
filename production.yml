@@ -1,0 +1,15 @@
+services:
+  msconvert:
+    image: ptrxyz/chemotion:msconvert-2.0.1
+    volumes:
+      - ${STORAGE}/shared/spectra:/shared:rw
+    networks:
+      - spectra-internal
+  spectra:
+    image: ptrxyz/chemotion:spectra-2.0.1
+    volumes:
+      - ${STORAGE}/shared/spectra:/shared:rw
+    networks:
+      - spectra-internal
+    ports:
+      - 4000
