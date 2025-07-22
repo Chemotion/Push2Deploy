@@ -1,0 +1,13 @@
+production:
+  :url: "https://converter.service.chemdev.scc.kit.edu"
+  :profile: "find_it_in_your_project_environment"
+  :secret_key: "find_it_in_your_project_environment"
+  :timeout: 300
+  :ext:
+    - ".xy"
+    - ".xls"
+    - ".xlsx"
+    - ".txt"
+    - ".brml"
+    - ".dta"
+    - ".pssession"
