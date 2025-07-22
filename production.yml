@@ -1,0 +1,11 @@
+services:
+  converter:
+    image: ptrxyz/chemotion:converter-2.0.1
+    environment:
+      - HTPASSWD_PATH=/passwd/production.htpasswd
+    volumes:
+      - ${STORAGE}/converter/profiles:/srv/chemotion/profiles
+      - ${STORAGE}/converter/datasets:/srv/chemotion/datasets
+      - ${STORAGE}/converter/passwords:/passwd
+    ports:
+      - 4000
