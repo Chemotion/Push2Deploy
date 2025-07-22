@@ -1,8 +1,9 @@
 services:
-  hostname: ketchersidecar
+  hostname:
+    - ketchersidecar
   sidecar:
     image: ptrxyz/chemotion:ketchersvc-sc-1.10.5
-  network:
-    ketcher-for-sidecar
+  networks:
+    - ketcher-for-sidecar
 networks:
   ketcher-for-sidecar:
