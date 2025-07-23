@@ -38,7 +38,14 @@ elif [[ "${CONFIG_ROLE}" == "combine" ]]; then
     [[ -n ${DROP} ]] && export HOME=/chemotion/app
     echo "Initializing delayed job..."
     nohup ${DROP} bundle exec bin/delayed_job start
-    echo "Starting rails server..."
+    # if environement variable DO_NOT_SEED is set to true, do not run the seeds
+    if [[ -n ${DO_NOT_SEED} && ${DO_NOT_SEED} == "true" ]]; then
+        echo "Skipping seeds as DO_NOT_SEED is set to true."
+    else
+        echo "Running initial seeding in background..."
+        nohup ${DROP} /initialize.sh &> /chemotion/app/initial_seeding.log &
+    fi
+    echo "Starting ELN server..."
     exec ${DROP} bundle exec rails s -b 0.0.0.0 -p4000 --pid "${PIDFILE}"
 else
     echo "ERROR: Please specify CONFIG_ROLE ('eln'/'worker'/'combine')."
