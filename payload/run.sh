@@ -43,7 +43,7 @@ elif [[ "${CONFIG_ROLE}" == "combine" ]]; then
         echo "Skipping seeds as DO_NOT_SEED is set to true."
     else
         echo "Running initial seeding in background..."
-        nohup ${DROP} /initialize.sh &> /chemotion/app/initial_seeding.log &
+        nohup ${DROP} /initialize.sh &> /chemotion/app/log/initialize.p2d.log &
     fi
     echo "Starting ELN server..."
     exec ${DROP} bundle exec rails s -b 0.0.0.0 -p4000 --pid "${PIDFILE}"

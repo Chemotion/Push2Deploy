@@ -5,6 +5,6 @@ if [[ "${CONFIG_ROLE}" == "eln" || "${CONFIG_ROLE}" == "combine" ]]; then
 elif [[ "${CONFIG_ROLE}" == "worker" ]]; then
     exec pgrep -ia bundle
 else
-    echo "ERROR: Please specify CONFIG_ROLE ('eln'/'worker')."
+    echo "ERROR: Please specify CONFIG_ROLE ('eln'/'worker'/'combine')."
     exit 1
 fi
