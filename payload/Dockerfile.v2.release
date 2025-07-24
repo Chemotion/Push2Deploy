@@ -10,7 +10,7 @@ ENV PATH=/app/node_modules/.bin:$PATH
 
 # Install dependencies first
 COPY package.json ./
-RUN export NODE_OPTIONS=--max-old-space-size=102400
+RUN export NODE_OPTIONS=--max-old-space-size=153600
 RUN npm i
 RUN npm i react-scripts@latest -g
 
@@ -19,10 +19,9 @@ COPY . .
 RUN echo "export default { version: '${RELEASE_VERSION}' };" > src/versionInfo.ts
 
 # Create releases directory and build
-RUN mkdir -p /output && \
-    npm run build
+RUN npm run build
 
-RUN cp -r dist/* /output
+RUN mkdir -p /output && cp -r dist/* /output
 
 FROM scratch AS copytohost
 # Copy the build output to the host machine
