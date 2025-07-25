@@ -31,7 +31,7 @@ for release in v0.1.0 v0.2.0 v0.3.0 v0.4.0 v0.5.0 v0.6.0 v0.7.0 v0.8.0 v0.9.0 v1
     fi
     # set the release version in the Dockerfile
     mkdir -p ../releases/${release}
-    docker build --output ../releases/${release} --build-arg RELEASE=$release -f Dockerfile.release . && echo "Built release $release"
+    docker build --no-cache --output ../releases/${release} --build-arg RELEASE=$release -f Dockerfile.release . && echo "Built release $release"
     git clean -fdx
 done
 cd ..
