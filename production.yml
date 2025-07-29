@@ -1,6 +1,5 @@
 services:
   nmrium:
-    description: NMRium React Wrapper
     image: nginx:stable-alpine
     ports:
       - 80
