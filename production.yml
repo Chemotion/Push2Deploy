@@ -1,14 +1,14 @@
 services:
-  name: nmrium
-  description: NMRium React Wrapper
-  image: nginx:stable-alpine
-  ports:
-    - 80
-  environment:
-    - RELEASE=${NMRIUM_RELEASE}
-    - location=${NMRIUM_WRAPPER_LOCATION}
-  volumes:
-    - ${NMRIUM_WRAPPER_LOCATION}/nginx.conf:/etc/nginx/conf.d/default.conf
-    - ${NMRIUM_WRAPPER_LOCATION}/releases/${NMRIUM_RELEASE}:/usr/share/nginx/html
-  healthcheck:
-    test: ["CMD", "curl", "-f", "http://localhost/"]
+  nmrium:
+    description: NMRium React Wrapper
+    image: nginx:stable-alpine
+    ports:
+      - 80
+    environment:
+      - RELEASE=${NMRIUM_RELEASE}
+      - location=${NMRIUM_WRAPPER_LOCATION}
+    volumes:
+      - ${NMRIUM_WRAPPER_LOCATION}/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ${NMRIUM_WRAPPER_LOCATION}/releases/${NMRIUM_RELEASE}:/usr/share/nginx/html
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
