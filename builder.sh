@@ -2,9 +2,7 @@
 if [ ! -d "nmrium-react-wrapper" ]; then
     git clone https://github.com/NFDI4Chem/nmrium-react-wrapper.git nmrium-react-wrapper
 else
-    cd nmrium-react-wrapper
-    git pull origin main
-    cd ..
+    cd nmrium-react-wrapper && git pull origin main && cd ..
 fi
 mkdir -p toPackage
 wget https://raw.githubusercontent.com/Chemotion/Push2Deploy/nmrium/payload/useWhiteList.ts
@@ -29,6 +27,7 @@ for release in v0.1.0 v0.2.0 v0.3.0 v0.4.0 v0.5.0 v0.6.0 v0.7.0 v0.8.0 v0.9.0 v1
         # increase the memory limit for node
         sed -i 's/NODE_OPTIONS=--max_old_space_size=4096//g' package.json
     fi
+    rm -rf build dist # remove old build directory if any is committed to the repository
     docker build --no-cache --output $release --build-arg RELEASE=$release -f Dockerfile.release . && echo "Built release $release"
     # if build was successful, move the release to toPackage directory
     if [ $? -eq 0 ]; then
@@ -38,11 +37,8 @@ for release in v0.1.0 v0.2.0 v0.3.0 v0.4.0 v0.5.0 v0.6.0 v0.7.0 v0.8.0 v0.9.0 v1
 done
 cd ..
 echo "Cleaning up..."
-rm useWhiteList.ts Dockerfile.v1.release Dockerfile.v2.release
-rm -rf nmrium-react-wrapper
+rm -rf useWhiteList.ts Dockerfile.v1.release Dockerfile.v2.release nmrium-react-wrapper releases nginx.conf
 # rearrange the directory structure
-cp -r toPackage/$release releases
-mv toPackage/* releases/.
-rm -r toPackage
+cp -r toPackage/$release releases && mv toPackage/* releases/. && rm -r toPackage
 wget https://raw.githubusercontent.com/Chemotion/Push2Deploy/nmrium/payload/nginx.conf
 echo "Done."
