@@ -1,0 +1,15 @@
+# Production stage
+FROM nginx:stable-alpine
+
+# Copy built files from builder
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY releases /usr/share/nginx/html
+
+# Set permissions for nginx
+RUN chown -R nginx:nginx /usr/share/nginx/html
+
+# Expose port 80
+EXPOSE 80
+
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]
