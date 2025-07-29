@@ -2,7 +2,7 @@ services:
   nmrium:
     build:
       context: .
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.nmrium
     ports:
       - 80
     healthcheck:
