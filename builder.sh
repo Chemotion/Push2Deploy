@@ -8,6 +8,7 @@ mkdir -p toPackage
 wget https://raw.githubusercontent.com/Chemotion/Push2Deploy/nmrium/payload/useWhiteList.ts
 wget https://raw.githubusercontent.com/Chemotion/Push2Deploy/nmrium/payload/Dockerfile.v1.release
 wget https://raw.githubusercontent.com/Chemotion/Push2Deploy/nmrium/payload/Dockerfile.v2.release
+wget https://raw.githubusercontent.com/Chemotion/Push2Deploy/nmrium/payload/Dockerfile.v3.release
 cd nmrium-react-wrapper
 for release in v0.1.0 v0.2.0 v0.3.0 v0.4.0 v0.5.0 v0.6.0 v0.7.0 v0.8.0 v0.9.0 v1.0.0; do
     if [ -d "../toPackage/$release" ]; then
@@ -22,8 +23,12 @@ for release in v0.1.0 v0.2.0 v0.3.0 v0.4.0 v0.5.0 v0.6.0 v0.7.0 v0.8.0 v0.9.0 v1
     # version is less than 0.9.0, use Dockerfile v1
     if [[ "$release" < "v0.9.0" ]]; then
         cp ../Dockerfile.v1.release ./Dockerfile.release
-    else
+    elif [[ "$release" == "v0.9.0" ]]; then
         cp ../Dockerfile.v2.release ./Dockerfile.release
+        # increase the memory limit for node
+        sed -i 's/NODE_OPTIONS=--max_old_space_size=4096//g' package.json
+    elif [[ "$release" == "v1.0.0" ]]; then
+        cp ../Dockerfile.v3.release ./Dockerfile.release
         # increase the memory limit for node
         sed -i 's/NODE_OPTIONS=--max_old_space_size=4096//g' package.json
     fi
@@ -37,7 +42,7 @@ for release in v0.1.0 v0.2.0 v0.3.0 v0.4.0 v0.5.0 v0.6.0 v0.7.0 v0.8.0 v0.9.0 v1
 done
 cd ..
 echo "Cleaning up..."
-rm -rf useWhiteList.ts Dockerfile.v1.release Dockerfile.v2.release nmrium-react-wrapper releases nginx.conf
+rm -rf useWhiteList.ts Dockerfile.* nmrium-react-wrapper releases nginx.conf
 # rearrange the directory structure
 cp -r toPackage/$release releases && mv toPackage/* releases/. && rm -r toPackage
 wget https://raw.githubusercontent.com/Chemotion/Push2Deploy/nmrium/payload/nginx.conf
