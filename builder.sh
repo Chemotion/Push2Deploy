@@ -6,13 +6,13 @@ else
     git pull origin main
     cd ..
 fi
-mkdir -p releases
-wget https://github.com/Chemotion/Push2Deploy/raw/refs/heads/nmrium/payload/useWhiteList.ts
-wget https://github.com/Chemotion/Push2Deploy/raw/refs/heads/nmrium/payload/Dockerfile.v1.release
-wget https://github.com/Chemotion/Push2Deploy/raw/refs/heads/nmrium/payload/Dockerfile.v2.release
+mkdir -p toPackage
+wget https://raw.githubusercontent.com/Chemotion/Push2Deploy/nmrium/payload/useWhiteList.ts
+wget https://raw.githubusercontent.com/Chemotion/Push2Deploy/nmrium/payload/Dockerfile.v1.release
+wget https://raw.githubusercontent.com/Chemotion/Push2Deploy/nmrium/payload/Dockerfile.v2.release
 cd nmrium-react-wrapper
 for release in v0.1.0 v0.2.0 v0.3.0 v0.4.0 v0.5.0 v0.6.0 v0.7.0 v0.8.0 v0.9.0 v1.0.0; do
-    if [ -d "../releases/$release" ]; then
+    if [ -d "../toPackage/$release" ]; then
         echo "Directory $release already exists, skipping..."
         continue
     fi
@@ -29,11 +29,20 @@ for release in v0.1.0 v0.2.0 v0.3.0 v0.4.0 v0.5.0 v0.6.0 v0.7.0 v0.8.0 v0.9.0 v1
         # increase the memory limit for node
         sed -i 's/NODE_OPTIONS=--max_old_space_size=4096//g' package.json
     fi
-    # set the release version in the Dockerfile
-    mkdir -p ../releases/${release}
-    docker build --no-cache --output ../releases/${release} --build-arg RELEASE=$release -f Dockerfile.release . && echo "Built release $release"
-    git clean -fdx
+    docker build --no-cache --output $release --build-arg RELEASE=$release -f Dockerfile.release . && echo "Built release $release"
+    # if build was successful, move the release to toPackage directory
+    if [ $? -eq 0 ]; then
+        mv $release ../toPackage/.
+    fi
+    git reset --hard
 done
 cd ..
 echo "Cleaning up..."
 rm useWhiteList.ts Dockerfile.v1.release Dockerfile.v2.release
+rm -rf nmrium-react-wrapper
+# rearrange the directory structure
+cp -r toPackage/$release releases
+mv toPackage/* releases/.
+rm -r toPackage
+wget https://raw.githubusercontent.com/Chemotion/Push2Deploy/nmrium/payload/nginx.conf
+echo "Done."

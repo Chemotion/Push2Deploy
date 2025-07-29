@@ -21,7 +21,7 @@ RUN echo "export default { version: '${RELEASE_VERSION}' };" > src/versionInfo.t
 # Create releases directory and build
 RUN npm run build
 
-RUN mkdir -p /output && cp -r dist/* /output
+RUN mkdir -p /output && mv dist/* /output
 
 FROM scratch AS copytohost
 # Copy the build output to the host machine
