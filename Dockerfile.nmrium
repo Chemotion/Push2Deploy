@@ -12,7 +12,7 @@ RUN echo "export default { version: 'v0.1.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
 
 RUN npm run build
-RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output )
+RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output ) && touch /finished_1
 
 FROM node:22-alpine3.18 AS builder2
 
@@ -21,6 +21,7 @@ ADD https://github.com/NFDI4Chem/nmrium-react-wrapper.git#v0.2.0 /app
 WORKDIR /app
 ENV PATH=/app/node_modules/.bin:$PATH
 
+COPY --from=builder1 /finished_1 /unfinished_2
 RUN npm ci
 RUN npm install react-scripts@latest -g
 
@@ -28,7 +29,7 @@ RUN echo "export default { version: 'v0.2.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
 
 RUN npm run build
-RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output )
+RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output ) && mv /unfinished_2 /finished_2
 
 FROM node:22-alpine3.18 AS builder3
 
@@ -37,6 +38,7 @@ ADD https://github.com/NFDI4Chem/nmrium-react-wrapper.git#v0.3.0 /app
 WORKDIR /app
 ENV PATH=/app/node_modules/.bin:$PATH
 
+COPY --from=builder2 /finished_2 /unfinished_3
 RUN npm ci
 RUN npm install react-scripts@latest -g
 
@@ -44,7 +46,7 @@ RUN echo "export default { version: 'v0.3.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
 
 RUN npm run build
-RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output )
+RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output ) && mv /unfinished_3 /finished_3
 
 FROM node:22-alpine3.18 AS builder4
 
@@ -53,6 +55,7 @@ ADD https://github.com/NFDI4Chem/nmrium-react-wrapper.git#v0.4.0 /app
 WORKDIR /app
 ENV PATH=/app/node_modules/.bin:$PATH
 
+COPY --from=builder3 /finished_3 /unfinished_4
 RUN npm ci
 RUN npm install react-scripts@latest -g
 
@@ -60,7 +63,7 @@ RUN echo "export default { version: 'v0.4.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
 
 RUN npm run build
-RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output )
+RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output ) && mv /unfinished_4 /finished_4
 
 FROM node:22-alpine3.18 AS builder5
 
@@ -69,6 +72,7 @@ ADD https://github.com/NFDI4Chem/nmrium-react-wrapper.git#v0.5.0 /app
 WORKDIR /app
 ENV PATH=/app/node_modules/.bin:$PATH
 
+COPY --from=builder4 /finished_4 /unfinished_5
 RUN npm ci
 RUN npm install react-scripts@latest -g
 
@@ -76,7 +80,7 @@ RUN echo "export default { version: 'v0.5.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
 
 RUN npm run build
-RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output )
+RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output ) && mv /unfinished_5 /finished_5
 
 FROM node:22-alpine3.18 AS builder6
 
@@ -85,6 +89,7 @@ ADD https://github.com/NFDI4Chem/nmrium-react-wrapper.git#v0.6.0 /app
 WORKDIR /app
 ENV PATH=/app/node_modules/.bin:$PATH
 
+COPY --from=builder5 /finished_5 /unfinished_6
 RUN npm ci
 RUN npm install react-scripts@latest -g
 
@@ -92,7 +97,7 @@ RUN echo "export default { version: 'v0.6.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
 
 RUN npm run build
-RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output )
+RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output ) && mv /unfinished_6 /finished_6
 
 FROM node:22-alpine3.18 AS builder7
 
@@ -101,6 +106,7 @@ ADD https://github.com/NFDI4Chem/nmrium-react-wrapper.git#v0.7.0 /app
 WORKDIR /app
 ENV PATH=/app/node_modules/.bin:$PATH
 
+COPY --from=builder6 /finished_6 /unfinished_7
 RUN npm ci
 RUN npm install react-scripts@latest -g
 
@@ -108,7 +114,7 @@ RUN echo "export default { version: 'v0.7.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
 
 RUN npm run build
-RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output )
+RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output ) && mv /unfinished_7 /finished_7
 
 FROM node:22-alpine3.18 AS builder8
 
@@ -117,6 +123,7 @@ ADD https://github.com/NFDI4Chem/nmrium-react-wrapper.git#v0.8.0 /app
 WORKDIR /app
 ENV PATH=/app/node_modules/.bin:$PATH
 
+COPY --from=builder7 /finished_7 /unfinished_8
 RUN npm ci
 RUN npm install react-scripts@latest -g
 
@@ -124,7 +131,7 @@ RUN echo "export default { version: 'v0.8.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
 
 RUN npm run build
-RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output )
+RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output ) && mv /unfinished_8 /finished_8
 
 FROM node:22-alpine3.18 AS builder9
 
@@ -133,6 +140,7 @@ ADD https://github.com/NFDI4Chem/nmrium-react-wrapper.git#v0.9.0 /app
 WORKDIR /app
 ENV PATH=/app/node_modules/.bin:$PATH
 
+COPY --from=builder8 /finished_8 /unfinished_9
 RUN export NODE_OPTIONS=--max-old-space-size=153600
 RUN rm package-lock.json
 RUN npm i
@@ -142,7 +150,7 @@ RUN echo "export default { version: 'v0.9.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
 
 RUN npm run build
-RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output )
+RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output ) && mv /unfinished_9 /finished_9
 
 FROM node:22-alpine3.18 AS builder10
 
@@ -151,6 +159,7 @@ ADD https://github.com/NFDI4Chem/nmrium-react-wrapper.git#v1.0.0 /app
 WORKDIR /app
 ENV PATH=/app/node_modules/.bin:$PATH
 
+COPY --from=builder9 /finished_9 /unfinished_10
 RUN export NODE_OPTIONS=--max-old-space-size=153600
 RUN rm package-lock.json
 RUN npm i
@@ -161,7 +170,7 @@ COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
 
 ENV NO_MINIFY=true
 RUN npm run build
-RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output )
+RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output ) && mv /unfinished_10 /finished_10
 
 # Base image for building the application
 FROM nginx:stable-alpine
