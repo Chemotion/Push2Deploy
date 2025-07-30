@@ -1,5 +1,5 @@
 production:
-  :url: "https://converter.service.chemdev.scc.kit.edu"
+  :url: "https://converter.chemserv.scc.kit.edu"
   :profile: "find_it_in_your_project_environment"
   :secret_key: "find_it_in_your_project_environment"
   :timeout: 300

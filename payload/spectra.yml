@@ -1,5 +1,5 @@
 production:
   :chemspectra:
-    :url: "https://spectra.service.chemdev.scc.kit.edu/"
+    :url: "https://spectra.chemserv.scc.kit.edu/"
   :nmriumwrapper:
-    :url: "https://nmrium.chemotion.scc.kit.edu/"
+    :url: "https://nmrium.chemserv.scc.kit.edu/"
