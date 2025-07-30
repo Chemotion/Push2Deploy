@@ -1,0 +1,6 @@
+services:
+  caddy:
+    image: caddy:latest
+    volumes:
+      - ${STORAGE}/caddy/pages:/pages:ro
+      - ${STORAGE}/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
