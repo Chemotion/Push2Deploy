@@ -1,0 +1,2 @@
+production:
+  :indigo_service_url: 'https://indigo.chemserv.scc.kit.edu/'
