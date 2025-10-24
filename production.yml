@@ -1,17 +1,29 @@
 services:
-  msconvert:
+  msconvert-211:
+    image: ptrxyz/chemotion:msconvert-2.1.1
+    volumes:
+      - ${STORAGE}/shared/spectra-211:/shared:rw
+    networks:
+      - spectra-internal-211
+  spectra-211:
+    image: ptrxyz/chemotion:spectra-2.1.1
+    volumes:
+      - ${STORAGE}/shared/spectra-211:/shared:rw
+    networks:
+      - spectra-internal-211
+  msconvert-201:
     image: ptrxyz/chemotion:msconvert-2.0.1
     volumes:
-      - ${STORAGE}/shared/spectra:/shared:rw
+      - ${STORAGE}/shared/spectra-201:/shared:rw
     networks:
-      - spectra-internal
-  spectra:
+      - spectra-internal-201
+  spectra-201:
     image: ptrxyz/chemotion:spectra-2.0.1
     volumes:
-      - ${STORAGE}/shared/spectra:/shared:rw
+      - ${STORAGE}/shared/spectra-201:/shared:rw
     networks:
-      - spectra-internal
-    ports:
-      - 4000
+      - spectra-internal-201
+
 networks:
-  spectra-internal:
+  spectra-internal-211:
+  spectra-internal-201:
