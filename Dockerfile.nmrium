@@ -179,7 +179,7 @@ ADD https://github.com/NFDI4Chem/nmrium-react-wrapper.git#v1.1.0 /app
 WORKDIR /app
 ENV PATH=/app/node_modules/.bin:$PATH
 
-COPY --from=builder9 /finished_10 /unfinished_11
+COPY --from=builder10 /finished_10 /unfinished_11
 RUN export NODE_OPTIONS=--max-old-space-size=153600
 RUN rm package-lock.json
 RUN npm i
