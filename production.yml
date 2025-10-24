@@ -5,16 +5,12 @@ services:
       - CONFIG_KETCHER_URL=http://ketchersidecar2
     networks:
       - ketcher-for-sidecar
-    ports:
-      - 4211:4000
   ketchersvc-201:
     image: ptrxyz/chemotion:ketchersvc-2.0.1
     environment:
       - CONFIG_KETCHER_URL=http://ketchersidecar1
     networks:
       - ketcher-for-sidecar
-    ports:
-      - 4201:4000
 networks:
   ketcher-for-sidecar:
     external: true
