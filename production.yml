@@ -5,7 +5,7 @@ services:
       - ${STORAGE}/shared/spectra/220:/shared:rw
     networks:
       - spectra-internal-220
-  spectra-211:
+  spectra-220:
     image: ptrxyz/chemotion:spectra-2.2.0
     volumes:
       - ${STORAGE}/shared/spectra/220:/shared:rw
