@@ -1,4 +1,16 @@
 services:
+  msconvert-300:
+    image: ptrxyz/chemotion:msconvert-3.0.0
+    volumes:
+      - ${STORAGE}/shared/spectra/300:/shared:rw
+    networks:
+      - spectra-internal-300
+  spectra-300:
+    image: ptrxyz/chemotion:spectra-3.0.0
+    volumes:
+      - ${STORAGE}/shared/spectra/300:/shared:rw
+    networks:
+      - spectra-internal-300
   msconvert-220:
     image: ptrxyz/chemotion:msconvert-2.2.0
     volumes:
@@ -37,6 +49,7 @@ services:
       - spectra-internal-201
 
 networks:
+  spectra-internal-300:
   spectra-internal-220:
   spectra-internal-211:
   spectra-internal-201:
