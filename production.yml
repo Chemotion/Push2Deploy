@@ -3,9 +3,9 @@ services:
     image: postgres:16-alpine
     restart: always
     volumes:
-      - ${STORAGE}/shared/plausible/db-data:/var/lib/postgresql/data
+      - ${STORAGE}/plausible/db-data:/var/lib/postgresql/data
     env_file:
-      - ${STORAGE}/shared/plausible/.env
+      - ${STORAGE}/plausible/.env
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       start_period: 1m
@@ -14,22 +14,22 @@ services:
     image: clickhouse/clickhouse-server:24.12-alpine
     restart: always
     volumes:
-      - ${STORAGE}/shared/plausible/event-data:/var/lib/clickhouse
-      - ${STORAGE}/shared/plausible/event-logs:/var/log/clickhouse-server
-      - ${STORAGE}/shared/plausible/clickhouse/logs.xml:/etc/clickhouse-server/config.d/logs.xml:ro
+      - ${STORAGE}/plausible/event-data:/var/lib/clickhouse
+      - ${STORAGE}/plausible/event-logs:/var/log/clickhouse-server
+      - ${STORAGE}/plausible/clickhouse/logs.xml:/etc/clickhouse-server/config.d/logs.xml:ro
       # This makes ClickHouse bind to IPv4 only, since Docker doesn't enable IPv6 in bridge networks by default.
       # Fixes "Listen [::]:9000 failed: Address family for hostname not supported" warnings.
-      - ${STORAGE}/shared/plausible/clickhouse/ipv4-only.xml:/etc/clickhouse-server/config.d/ipv4-only.xml:ro
+      - ${STORAGE}/plausible/clickhouse/ipv4-only.xml:/etc/clickhouse-server/config.d/ipv4-only.xml:ro
       # The following configuration files make ClickHouse consume less resources, which is useful for small setups.
       # https://clickhouse.com/docs/en/operations/tips#using-less-than-16gb-of-ram
-      - ${STORAGE}/shared/plausible/clickhouse/low-resources.xml:/etc/clickhouse-server/config.d/low-resources.xml:ro
-      - ${STORAGE}/shared/plausible/clickhouse/default-profile-low-resources-overrides.xml:/etc/clickhouse-server/users.d/default-profile-low-resources-overrides.xml:ro
+      - ${STORAGE}/plausible/clickhouse/low-resources.xml:/etc/clickhouse-server/config.d/low-resources.xml:ro
+      - ${STORAGE}/plausible/clickhouse/default-profile-low-resources-overrides.xml:/etc/clickhouse-server/users.d/default-profile-low-resources-overrides.xml:ro
     ulimits:
       nofile:
         soft: 262144
         hard: 262144
     env_file:
-      - ${STORAGE}/shared/plausible/.env
+      - ${STORAGE}/plausible/.env
     healthcheck:
       test:
         [
@@ -48,10 +48,10 @@ services:
       plausible_events_db:
         condition: service_healthy
     volumes:
-      - ${STORAGE}/shared/plausible/plausible-data:/var/lib/plausible
+      - ${STORAGE}/plausible/plausible-data:/var/lib/plausible
     ulimits:
       nofile:
         soft: 65535
         hard: 65535
     env_file:
-      - ${STORAGE}/shared/plausible/.env
+      - ${STORAGE}/plausible/.env
