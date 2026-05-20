@@ -1,4 +1,16 @@
 services:
+  msconvert-312:
+    image: ptrxyz/chemotion:msconvert-3.1.2
+    volumes:
+      - ${STORAGE}/shared/spectra/312:/shared:rw
+    networks:
+      - spectra-internal-312
+  spectra-300:
+    image: ptrxyz/chemotion:spectra-3.1.2
+    volumes:
+      - ${STORAGE}/shared/spectra/312:/shared:rw
+    networks:
+      - spectra-internal-312
   msconvert-300:
     image: ptrxyz/chemotion:msconvert-3.0.0
     volumes:
@@ -23,33 +35,8 @@ services:
       - ${STORAGE}/shared/spectra/220:/shared:rw
     networks:
       - spectra-internal-220
-  msconvert-211:
-    image: ptrxyz/chemotion:msconvert-2.1.1
-    volumes:
-      - ${STORAGE}/shared/spectra/211:/shared:rw
-    networks:
-      - spectra-internal-211
-  spectra-211:
-    image: ptrxyz/chemotion:spectra-2.1.1
-    volumes:
-      - ${STORAGE}/shared/spectra/211:/shared:rw
-    networks:
-      - spectra-internal-211
-  msconvert-201:
-    image: ptrxyz/chemotion:msconvert-2.0.1
-    volumes:
-      - ${STORAGE}/shared/spectra/201:/shared:rw
-    networks:
-      - spectra-internal-201
-  spectra-201:
-    image: ptrxyz/chemotion:spectra-2.0.1
-    volumes:
-      - ${STORAGE}/shared/spectra/201:/shared:rw
-    networks:
-      - spectra-internal-201
 
 networks:
+  spectra-internal-312:
   spectra-internal-300:
   spectra-internal-220:
-  spectra-internal-211:
-  spectra-internal-201:
