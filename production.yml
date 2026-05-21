@@ -5,7 +5,7 @@ services:
       - ${STORAGE}/shared/spectra/312:/shared:rw
     networks:
       - spectra-internal-312
-  spectra-300:
+  spectra-312:
     image: ptrxyz/chemotion:spectra-3.1.2
     volumes:
       - ${STORAGE}/shared/spectra/312:/shared:rw
