@@ -1,4 +1,9 @@
 services:
+  sidecar-312:
+    image: ptrxyz/chemotion:ketchersvc-sc-1.10.5
+    hostname: ketchersidecar312
+    networks:
+      - ketcher-for-sidecar
   sidecar-300:
     image: ptrxyz/chemotion:ketchersvc-sc-1.10.5
     hostname: ketchersidecar300
@@ -7,16 +12,6 @@ services:
   sidecar-220:
     image: ptrxyz/chemotion:ketchersvc-sc-1.10.5
     hostname: ketchersidecar220
-    networks:
-      - ketcher-for-sidecar
-  sidecar-211:
-    image: ptrxyz/chemotion:ketchersvc-sc-1.10.5
-    hostname: ketchersidecar211
-    networks:
-      - ketcher-for-sidecar
-  sidecar-201:
-    image: ptrxyz/chemotion:ketchersvc-sc-1.10.5
-    hostname: ketchersidecar201
     networks:
       - ketcher-for-sidecar
 networks:
