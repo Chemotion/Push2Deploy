@@ -1,4 +1,12 @@
 services:
+  converter-312:
+    image: ptrxyz/chemotion:converter-3.1.2
+    environment:
+      - HTPASSWD_PATH=/passwd/production.htpasswd
+    volumes:
+      - ${STORAGE}/converter/312/profiles:/srv/chemotion/profiles
+      - ${STORAGE}/converter/312/datasets:/srv/chemotion/datasets
+      - ${STORAGE}/converter/passwords:/passwd
   converter-300:
     image: ptrxyz/chemotion:converter-3.0.0
     environment:
@@ -15,19 +23,3 @@ services:
       - ${STORAGE}/converter/220/profiles:/srv/chemotion/profiles
       - ${STORAGE}/converter/220/datasets:/srv/chemotion/datasets
       - ${STORAGE}/converter/passwords:/passwd 
-  converter-211:
-    image: ptrxyz/chemotion:converter-2.1.1
-    environment:
-      - HTPASSWD_PATH=/passwd/production.htpasswd
-    volumes:
-      - ${STORAGE}/converter/211/profiles:/srv/chemotion/profiles
-      - ${STORAGE}/converter/211/datasets:/srv/chemotion/datasets
-      - ${STORAGE}/converter/passwords:/passwd 
-  converter-201:
-    image: ptrxyz/chemotion:converter-2.0.1
-    environment:
-      - HTPASSWD_PATH=/passwd/production.htpasswd
-    volumes:
-      - ${STORAGE}/converter/201/profiles:/srv/chemotion/profiles
-      - ${STORAGE}/converter/201/datasets:/srv/chemotion/datasets
-      - ${STORAGE}/converter/passwords:/passwd
