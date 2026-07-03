@@ -6,13 +6,12 @@ WORKDIR /app
 ENV PATH=/app/node_modules/.bin:$PATH
 
 RUN npm ci
-RUN npm install react-scripts@latest -g
 
 RUN echo "export default { version: 'v0.1.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
 
 RUN npm run build
-RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output ) && touch /finished_1
+RUN mkdir -p /output && mv build/v0.1.0/* /output && touch /finished_1
 
 FROM node:lts-alpine3.24 AS builder2
 
@@ -23,7 +22,6 @@ ENV PATH=/app/node_modules/.bin:$PATH
 
 COPY --from=builder1 /finished_1 /unfinished_2
 RUN npm ci
-RUN npm install react-scripts@latest -g
 
 RUN echo "export default { version: 'v0.2.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
@@ -40,7 +38,6 @@ ENV PATH=/app/node_modules/.bin:$PATH
 
 COPY --from=builder2 /finished_2 /unfinished_3
 RUN npm ci
-RUN npm install react-scripts@latest -g
 
 RUN echo "export default { version: 'v0.3.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
@@ -57,7 +54,6 @@ ENV PATH=/app/node_modules/.bin:$PATH
 
 COPY --from=builder3 /finished_3 /unfinished_4
 RUN npm ci
-RUN npm install react-scripts@latest -g
 
 RUN echo "export default { version: 'v0.4.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
@@ -74,7 +70,6 @@ ENV PATH=/app/node_modules/.bin:$PATH
 
 COPY --from=builder4 /finished_4 /unfinished_5
 RUN npm ci
-RUN npm install react-scripts@latest -g
 
 RUN echo "export default { version: 'v0.5.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
@@ -91,7 +86,6 @@ ENV PATH=/app/node_modules/.bin:$PATH
 
 COPY --from=builder5 /finished_5 /unfinished_6
 RUN npm ci
-RUN npm install react-scripts@latest -g
 
 RUN echo "export default { version: 'v0.6.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
@@ -108,7 +102,6 @@ ENV PATH=/app/node_modules/.bin:$PATH
 
 COPY --from=builder6 /finished_6 /unfinished_7
 RUN npm ci
-RUN npm install react-scripts@latest -g
 
 RUN echo "export default { version: 'v0.7.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
@@ -125,7 +118,6 @@ ENV PATH=/app/node_modules/.bin:$PATH
 
 COPY --from=builder7 /finished_7 /unfinished_8
 RUN npm ci
-RUN npm install react-scripts@latest -g
 
 RUN echo "export default { version: 'v0.8.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
@@ -141,10 +133,8 @@ WORKDIR /app
 ENV PATH=/app/node_modules/.bin:$PATH
 
 COPY --from=builder8 /finished_8 /unfinished_9
-RUN export NODE_OPTIONS=--max-old-space-size=153600
 RUN rm package-lock.json
 RUN npm i
-RUN npm i react-scripts@latest -g
 
 RUN echo "export default { version: 'v0.9.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
@@ -160,16 +150,13 @@ WORKDIR /app
 ENV PATH=/app/node_modules/.bin:$PATH
 
 COPY --from=builder9 /finished_9 /unfinished_10
-RUN export NODE_OPTIONS=--max-old-space-size=153600
 RUN rm package-lock.json
 RUN npm i
-RUN npm i react-scripts@latest -g
 
 RUN echo "export default { version: 'v1.0.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
 
-ENV NO_MINIFY=true
-RUN npm run build
+RUN npm run build-no-minify
 RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output ) && mv /unfinished_10 /finished_10
 
 FROM node:lts-alpine3.24 AS builder11
@@ -180,15 +167,12 @@ WORKDIR /app
 ENV PATH=/app/node_modules/.bin:$PATH
 
 COPY --from=builder10 /finished_10 /unfinished_11
-RUN export NODE_OPTIONS=--max-old-space-size=153600
 RUN npm ci
-RUN npm install react-scripts@latest -g
 
 RUN echo "export default { version: 'v1.1.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
 
-ENV NO_MINIFY=true
-RUN npm run build
+RUN npm run build-no-minify
 RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output ) && mv /unfinished_11 /finished_11
 
 FROM node:lts-alpine3.24 AS builder12
@@ -199,15 +183,12 @@ WORKDIR /app
 ENV PATH=/app/node_modules/.bin:$PATH
 
 COPY --from=builder11 /finished_11 /unfinished_12
-RUN export NODE_OPTIONS=--max-old-space-size=153600
 RUN npm ci
-RUN npm install react-scripts@latest -g
 
 RUN echo "export default { version: 'v1.2.0' };" > src/versionInfo.ts
 COPY payload/useWhiteList.ts src/hooks/useWhiteList.ts
 
-ENV NO_MINIFY=true
-RUN npm run build
+RUN npm run build-no-minify
 RUN mkdir -p /output && ( mv build/* /output || mv dist/* /output ) && mv /unfinished_12 /finished_12
 
 # Base image for building the application
